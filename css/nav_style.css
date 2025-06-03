@@ -2,3 +2,12 @@
     background-color: rgb(255, 194, 209);
     overflow: hidden;
 }
+
+.top_nav a{
+    color: rgb(255, 229, 236);
+    text-decoration: none;
+    float: left;
+    display: block;
+    padding: 14px 16px;
+    text-align: center;
+}

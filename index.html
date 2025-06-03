@@ -31,6 +31,17 @@
         </button>
     </div>
 
+    <script>
+        function selectEmotion(button, emotion) {
+            document.querySelectorAll('.container button').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+
+            button.classList.add('selected');
+            alert(emotion);
+        }
+    </script>
+
     <p>What made me feel that way?</p>
     <textarea rows="4" cols="50" placeholder="Describe your feelings..."></textarea>
 

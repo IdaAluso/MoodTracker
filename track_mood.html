@@ -28,24 +28,32 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>2025-01-01</td>
-                    <td>Happy</td>
-                    <td>Felt great after a long walk.</td>
-                    <td>Hope to feel even better tomorrow.</td>
-                </tr>
-                <tr>
-                    <td>2025-01-02</td>
-                    <td>Sad</td>
-                    <td>Missed a friend who moved away.</td>
-                    <td>Wishing for more time with friends.</td>
-                </tr>
-                <tr>
-                    <td>2025-01-03</td>
-                    <td>Angry</td>
-                    <td>Frustrated with work deadlines.</td>
-                    <td>Hoping for a calmer day tomorrow.</td>
-                </tr>
+                <?php
+                // Connect to the database
+                $conn = new mysqli('localhost', 'username', 'password', 'mood_tracker');
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+                // Fetch mood entries
+                $sql = "SELECT date, emotion, description, wish FROM mood_entries ORDER BY date DESC";
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    // Output data of each row
+                    while($row = $result->fetch_assoc()) {
+                        echo "<tr>
+                                <td>" . htmlspecialchars($row['date']) . "</td>
+                                <td>" . htmlspecialchars($row['emotion']) . "</td>
+                                <td>" . htmlspecialchars($row['description']) . "</td>
+                                <td>" . htmlspecialchars($row['wish']) . "</td>
+                              </tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='4'>No mood entries found.</td></tr>";
+                }
+                // Close the connection
+                $conn->close();
+                ?>
+            </tbody>
         </table>
 
         <div class="footer">

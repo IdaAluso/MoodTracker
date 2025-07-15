@@ -5,6 +5,10 @@
     <link rel="stylesheet" href="css/content_style.css">
     <link rel="stylesheet" href="css/form_style.css">
     <link rel="stylesheet" href="css/structure_style.css">
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 
 <body>
@@ -19,23 +23,7 @@
     
     <p>How I feel today</p>
 
-    <div class="container">
-        <button onclick="selectEmotion(this, 'Happy')">
-            <img src="image/happy.png" alt="Happy">
-        </button>
-        <button onclick="selectEmotion(this, 'Sad')">
-            <img src="image/sad.png" alt="Sad">
-        </button>
-        <button onclick="selectEmotion(this, 'Angry')">
-            <img src="image/angry.png" alt="Angry">
-        </button>
-        <button onclick="selectEmotion(this, 'Neutral')">
-            <img src="image/neutral.png" alt="Neutral">
-        </button>
-        <button onclick="selectEmotion(this, 'Scared')">
-            <img src="image/scared.png" alt="Scared">
-        </button>
-    </div>
+    <div id="emotion-buttons"></div>
 
     <script>
         function selectEmotion(button, emotion) {
@@ -54,8 +42,48 @@
     <p>What I wish for myself tomorrow</p>
     <textarea rows="4" cols="50" placeholder="Write your wishes for tomorrow..."></textarea>
 
-    <button>Submit</button>
+    <div class="submit-container">
+        <button>Submit</button>
+    </div>
 
     <div class="footer">&copy; 2025 - Mood Tracker. All Rights Reserved.</div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const MoodSelector = () => {
+            const [selected, setSelected] = useState(null);
+            const emotions = [
+            { label: 'Happy', icon: '😊' },
+            { label: 'Sad', icon: '😢' },
+            { label: 'Angry', icon: '😠' },
+            { label: 'Neutral', icon: '😐' },
+            { label: 'Scared', icon: '😱' },
+            ];
+
+            const handleClick = (emotion) => {
+            setSelected(emotion.label);
+            alert(emotion.label);
+            };
+
+            return (
+            <div className="container">
+                {emotions.map((emotion) => (
+                <button
+                    key={emotion.label}
+                    className={selected === emotion.label ? 'selected' : ''}
+                    onClick={() => handleClick(emotion)}
+                    style={{ fontSize: '30px', margin: '5px', padding: '10px' }}
+                >
+                    {emotion.icon}
+                </button>
+                ))}
+            </div>
+            );
+        };
+
+        ReactDOM.createRoot(document.getElementById('emotion-buttons')).render(<MoodSelector />);
+    </script>
+
 </body>
 </html>
